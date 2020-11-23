@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "nombre": "Julio Cesar Chavez Ruiz",
+        "rfc": "ASD45GSD5FG"
+    },
+    {
+        "id": 2,
+        "nombre": "Roberto Carlos Acosta Gutiérrez",
+        "rfc": "ASD45GSD5FG"
+    },
+    {
+        "id": 3,
+        "nombre": "Andres Lionel Messi",
+        "rfc": "ASD45GSD5FG"
+    },
+    {
+        "id": 4,
+        "nombre": "Cristiano Ronaldo dos Santos Aveiro",
+        "rfc": "ASD45GSD5FG"
+    }
+]

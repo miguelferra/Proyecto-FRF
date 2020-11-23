@@ -1,0 +1,38 @@
+[
+    {
+        "id": 54,
+        "nombre": "consolador",
+        "clasificacion": "placebo",
+        "precio": 10.5
+    },
+    {
+        "id": 55,
+        "nombre": "Trusa",
+        "clasificacion": "placebo",
+        "precio": 10.5
+    },
+    {
+        "id": 56,
+        "nombre": "Camisa",
+        "clasificacion": "placebo",
+        "precio": 10.5
+    },
+    {
+        "id": 57,
+        "nombre": "Gato",
+        "clasificacion": "placebo",
+        "precio": 10.5
+    },
+    {
+        "id": 58,
+        "nombre": "Pero",
+        "clasificacion": "placebo",
+        "precio": 10.5
+    },
+    {
+        "id": 59,
+        "nombre": "NIaa",
+        "clasificacion": "placebo",
+        "precio": 10.5
+    }
+]
