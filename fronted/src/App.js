@@ -1,8 +1,7 @@
 import './App.css';
 import Menu from './Components/Menu'
 import TablaProductos from './Components/productos/TablaProductos';
-import Productos from './Components/productos/Productos.json'
-import Doctores from './Components/doctor/Doctores.json'
+
 import React, {Component} from 'react'
 import FormProducto from './Components/productos/FormProducto';
 import FormInventario from './Components/inventario/FormInventario';
@@ -18,14 +17,72 @@ class App extends Component{
   constructor(){
     super();
     this.state={
-      productos: Productos,
-      doctores: Doctores
+      productos: [],
+      doctores: [],
+   
     }
+   
+
   }
   
   loadProductos =(data)=>{
     this.setState({productos: data})
+    console.log("La info de data: ",this.state.productos)
   }
+
+  loadDoctores = (data)=>{
+    this.setState({doctores:data})
+  }
+
+
+
+
+  componentDidMount(){
+    this.cargarProductos()
+    //this.cargarDoctores()
+}
+
+
+
+cargarProductos=()=>{
+fetch(`http://localhost:3000/FRF/productos`, {
+    method: 'get',
+    headers: new Headers({
+        'Content-Type': 'application/json'
+    }),
+   
+}).then(response => response.json())
+    .then(data => {
+
+   
+        console.log("bniaa",data)
+        this.setState({productos: data})
+    })
+   
+    .catch(err => console.log(err))
+}
+
+/*
+cargarDoctores=()=>{
+fetch(`http://localhost:3000/FRF/doctores`, {
+    method: 'get',
+    headers: new Headers({
+        'Content-Type': 'application/json'
+    }),
+   
+}).then(response => response.json())
+    .then(data => {
+
+   
+        console.log("doctores",data)
+        this.props.loadDoctores(data)
+    
+    })
+   
+    .catch(err => console.log(err))
+}
+*/
+  
 
   
 
@@ -34,9 +91,9 @@ class App extends Component{
       <div>
 
         <Router>
-          <Route path="/" render={()=>{
+          <Route  path="/" render={()=>{
             return <div>
-              <Menu className="menu"></Menu>
+              <Menu loadProductos={this.loadProductos}  loadDoctores={this.loadDoctores} className="menu"></Menu>
             </div>
           }}>
           </Route>
@@ -44,10 +101,19 @@ class App extends Component{
         <Route path="/producto" render={()=>{
           return <div>
             <TablaProductos productos={this.state.productos}></TablaProductos>
+            
+            
+          </div>
+        }}>
+        </Route>
+        <Route path="/productoAgregar" render={()=>{
+          return <div>
+            
             <FormProducto productos={this.state.productos} loadProductos={this.loadProductos}></FormProducto>
           </div>
         }}>
         </Route>
+        
 
         <Route path="/inventario" render={()=>{
           return <div>
@@ -55,7 +121,6 @@ class App extends Component{
             <FormInventario></FormInventario>
           </div>
         }}>
-
         </Route>
 
         <Route path="/doctor" render={()=>{

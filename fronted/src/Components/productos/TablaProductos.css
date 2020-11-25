@@ -1,4 +1,6 @@
-
+.tituloProducto{
+    text-align: center;
+margin: 20px;}
 table{
     border-collapse: collapse;
     margin: auto;
@@ -8,7 +10,7 @@ table{
 
 }
 .scroll{
-    height: 60vh;
+    height: 45vh;
     overflow-y: scroll;
     scroll-behavior: smooth;
 
@@ -25,21 +27,32 @@ table tr td{
 }
 .botones{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
-.botones button{
-    width: 40%;
-    padding: 10px;
+button{
+    
+    padding: 20px 20px;
     border-radius: 15px;
     border: 0px solid black;
     font-size: 0.9em;
+    color: white;
+    margin: 20px;
 }
-.btn-editar{
+
+.btn-agregarProducto{
+    background-color: rgb(31, 190, 92);
+}
+
+.btn-editarProducto{
     background-color: rgb(19, 143, 143);
-    color: white;
-    
 }
-.btn-eliminar{
+.btn-eliminarProducto{
     background-color: red;
-    color: white;
 }
+a{
+    padding: 20px 40px;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+}
+

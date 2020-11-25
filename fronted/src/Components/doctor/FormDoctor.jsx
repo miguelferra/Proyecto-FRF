@@ -2,6 +2,23 @@ import React, { Component } from 'react'
 import './FormDoctor.css'
 
 export default class FormDoctor extends Component {
+
+
+    agregarDoctor=()=>{
+        fetch(`http://localhost:3000/FRF/doctores`, {
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            method: 'post',
+            body: JSON.stringify({
+                nombre: "asdasd",
+                cedula: "asdasd"
+            })
+
+        }).then(response => response.json())
+            .then()
+            .catch(err => console.log(err))
+    }
     render() {
         return (
             <div className="width">
@@ -35,7 +52,7 @@ export default class FormDoctor extends Component {
                     <h3 className="error-cantidad">Error</h3>
                     </div>
 
-                    <input className="btn-agregar" type="button" value="Agregar"></input>
+                    <input className="btn-agregar" onClick={this.agregarDoctor} type="button" value="Agregar"></input>
                     
                    
                 </form>

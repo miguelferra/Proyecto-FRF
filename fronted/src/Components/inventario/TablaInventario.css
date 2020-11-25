@@ -23,19 +23,3 @@ table th{
 table tr td{
     padding: 3px;
 }
-.botones{
-    display: flex;
-    justify-content: space-around;
-}
-.botones button{
-    width: 40%;
-    padding: 10px;
-    border-radius: 15px;
-    border: 0px solid black;
-    font-size: 0.9em;
-}
-.btn-editar{
-    background-color: rgb(19, 143, 143);
-    color: white;
-    
-}

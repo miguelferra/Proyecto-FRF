@@ -49,12 +49,3 @@ select{
     margin: 10px;
     
 }
-.btn-agregar{
-    width: 20%;
-    border-radius: 30px;
-    margin: 10px auto;
-    padding: 10px;
-    background-color: rgb(31, 190, 92);
-    color: white;
-    border: 0px ;
-}

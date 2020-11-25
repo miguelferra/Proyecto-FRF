@@ -1,23 +1,29 @@
-form{
+
+
+.titulo-agregar{
+    margin: 40px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.form-producto{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
-   
 }
-.width{
-    border: 1px solid black;
+.width-producto{
+    margin-top: 50px;
+    
     border-radius: 30px;
     width: 90%;
     margin: auto;
-    height: 30vh;
-    
 }
-.segmento{
-    margin: auto;
 
-   
+.segmento-producto{
+    margin: 10px;
 }
+
 h3 {
     text-align: center;
     font-size: 12px;
@@ -26,22 +32,15 @@ h3 {
     color: red;
     display: none;
 }
-select{
-    width: 200px;
+.select-producto{
+    width: 400px;
     padding: 5px;
     border-radius: 5px;
     border: 1px solid black;
 }
 
 
-.segmento input{
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid black;
-    padding: 5px;
-    font-size: 15px;
-  
-}
+
 .labelito{
     display: inline-block;
     width: 200px;
@@ -49,8 +48,8 @@ select{
     margin: 10px;
     
 }
-.btn-agregar{
-    width: 20%;
+.btn-agregar-producto{
+    width: 150px;
     border-radius: 30px;
     margin: 10px auto;
     padding: 10px;
@@ -58,3 +57,16 @@ select{
     color: white;
     border: 0px ;
 }
+.segmento-producto{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 10px;
+}
+.segmento-producto input{
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 15px;
+} 
