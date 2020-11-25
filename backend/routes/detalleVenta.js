@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const doctoresSchema = require("../schemas/doctores");
+const detalleVentaSchema = require("../schemas/doctores");
 const validate = require("../middleware/validatedata");
 const doctoresController = require("../controller/doctores");
 

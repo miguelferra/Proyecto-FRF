@@ -1,18 +1,23 @@
-const {modelosMongoDB:{inventarioModel}} = require("../database/index");
+const {modelosMongoDB:{ventasModel}} = require("../database/index");
 
-const agregar = async(producto) =>{
+//Esto
+const agregar = async(req,res) =>{
+    //Recibe idDoctor, detalles, fecha, total
+    const { idDoctor, detalle, fecha, total } = req.body;
+    //const { idUsuario } = req.params;
     try{
-        const inventario = new inventarioModel({cantidad: "0"});
-        inventario.idProducto = producto;
-        await inventario.save();
+        const venta = new ventasModel({ idDoctor, detalle, fecha, total });
+        //inventario.idProducto = producto;
+        await venta.save();
+        res.json("Se registro correctamente");
     } catch (error) {
         res.status(400).send(error);
     }
 }
 
-const obtenerInventario = async(req, res)=>{
-        const inventario = await inventarioModel.find().populate('idProducto');
-        res.json(inventario);
+const obtenerVentas = async(req, res)=>{
+        const ventas = await ventasModel.find().populate('idDoctor');
+        res.json(ventas);
 }
 
 const modificar = async (req,res)=>{
@@ -40,7 +45,7 @@ const eliminar = async (id) =>{
 
 module.exports = {
     agregar,
-    obtenerInventario,
+    obtenerVentas,
     modificar,
     eliminar
 }
