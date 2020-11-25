@@ -1,18 +1,18 @@
-const {modelosMongoDB:{doctoresModel}} = require("../database/index");
+const {modelosMongoDB:{detalleVentaModel}} = require("../database/index");
 
-const agregar = async(req, res) =>{
+const agregar = async(producto) =>{
     try{
-        const doctor = new doctoresModel(req.body);
-        await doctor.save();
+        const detalleVenta = new detalleVentaModel(req.body);
+        await detalleVenta.save();
     
-        res.send(`${doctor.id}`);
+        res.send(`Detalle ha sido creado`);
     }catch (error) {
         res.status(400).send(error);
     }
 
 }
 
-const obtenerDoctores= async(req, res)=>{
+const obtenerDetalle= async(req, res)=>{
     try{
         const doctor = await doctoresModel.find();
         res.json(doctor);
