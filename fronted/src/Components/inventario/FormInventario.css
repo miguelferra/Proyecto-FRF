@@ -3,20 +3,16 @@ form{
     flex-direction: column;
     align-items: center;
     height: 100%;
-   
 }
-.width{
+.width-inventario{
     border: 1px solid black;
-    border-radius: 30px;
+    border-radius: 10px;
     width: 90%;
     margin: auto;
-    height: 30vh;
-    
+    box-shadow: 2px 2px 5px #999;
 }
-.segmento{
-    margin: auto;
-
-   
+.segmento-inventario{
+    margin: 10px auto;
 }
 h3 {
     text-align: center;
@@ -34,7 +30,7 @@ select{
 }
 
 
-.segmento input{
+.segmento-inventario input{
     width: 200px;
     border-radius: 5px;
     border: 1px solid black;
@@ -42,10 +38,9 @@ select{
     font-size: 15px;
   
 }
-.labelito{
+.labele{
     display: inline-block;
-    width: 200px;
+    width: 180px;
     text-align: right;
     margin: 10px;
-    
 }

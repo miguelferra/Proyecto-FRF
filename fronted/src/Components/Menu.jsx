@@ -11,8 +11,6 @@ class Menu extends Component{
            
         }
     }
-
-
     
     render(){
         return(
@@ -21,7 +19,7 @@ class Menu extends Component{
                 <nav className= "menu-head">
                     <ul className="menu-opciones">
                         <li className="menu-opciones-listado"><a href = "/">Venta</a></li>
-                        <li className="menu-opciones-listado"><Link to="/producto" >Producto</Link></li>
+                        <li className="menu-opciones-listado"><Link to="/producto">Producto</Link></li>
                         <li className="menu-opciones-listado"><Link to="/inventario">Inventario  </Link> </li>
                         <li><a href = "doctor"> Doctores </a></li>
                         

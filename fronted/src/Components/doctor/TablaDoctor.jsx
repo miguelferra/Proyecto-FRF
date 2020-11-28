@@ -9,11 +9,13 @@ export default class TablaDoctor extends Component {
             <div className="scroll">
                 <table >
                     <thead>
+                        <tr>
                         <th>id</th>
                         <th>nombre</th>
                         <th>RFC</th>
                        
                         <th>Controlador</th>
+                        </tr>
                     </thead>
 
                     {this.props.doctores.map(doctor => 

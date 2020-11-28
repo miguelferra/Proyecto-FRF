@@ -1,17 +1,26 @@
 
+.segmento-inventario{
+    opacity: 0.3;
+}
 table{
     border-collapse: collapse;
     margin: auto;
     width: 90%;
     margin-top: 20px;
     font-size: 0.8em;
+    
 
 }
-.scroll{
-    height: 60vh;
+.scroll-inventario{
+    height: 50vh;
     overflow-y: scroll;
     scroll-behavior: smooth;
+   
 
+}
+.titulo-inventario{
+    text-align: center;
+    margin: 30px;
 }
 table td {
     border: 1px solid rgb(187, 183, 183);
@@ -22,4 +31,21 @@ table th{
 }
 table tr td{
     padding: 3px;
+}
+.btn-editarInventario{
+    background-color:lightseagreen;
+    text-align: center;
+
+}
+.boto{
+    display: flex;
+    justify-content: center;
+}
+.modal{
+    position: absolute;
+    top: 33%;
+    left: 33%;
+    width: 33%;
+
+    margin: auto;
 }

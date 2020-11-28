@@ -1,59 +1,66 @@
 import React, { Component } from 'react'
 import './FormProducto.css'
-
 import {Link} from 'react-router-dom';
 
-export default class FormProducto extends Component {
+export default class FormProductoEditar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             productos: this.props.productos,
-            nuevoProducto: {
-                nombre: "",
-                clasificacion: "",
-                precio: ""
-            },
-           
+                _id: this.props.producto._id,
+                nombre: this.props.producto.nombre,
+                clasificacion: this.props.producto.clasificacion,
+                precio: this.props.producto.precio
         }
         
        
     }
 
-    handlendChange = (e) => {
+    handlendNombre = (e) => {
         this.setState({
-            nuevoProducto: {
-                ...this.state.nuevoProducto,
-                [e.target.name]: e.target.value
-            }
-        })
-
+                nombre: e.target.value
+            })
+    }
+    handlendClasifiacion = (e) => {
+        this.setState({
+                clasificacion: e.target.value
+            })
+    }
+    handlendPrecio = (e) => {
+        this.setState({
+                precio: e.target.value
+            })
     }
 
     
 
-    agregar = () => {
+    editarProducto = () => {
         
         document.getElementsByClassName("confirmacionProducto")[0].style.display="flex"
-        fetch(`http://localhost:3000/FRF/productos`, {
+
+      
+
+        fetch(`http://localhost:3000/FRF/productos/${this.state._id}`, {
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
-            method: 'post',
+            method: 'put',
             body: JSON.stringify({
-                nombre: this.state.nuevoProducto.nombre /*this.state.form.nombre.trim().replace(/\s\s+/g, ' ')*/,
-                clasificacion: this.state.nuevoProducto.clasificacion,
-                precio: this.state.nuevoProducto.precio
+                nombre: this.state.nombre /*this.state.form.nombre.trim().replace(/\s\s+/g, ' ')*/,
+                clasificacion: this.state.clasificacion,
+                precio: this.state.precio
             })
 
         }).then(response => response.json())
             .then()
             .catch(err => console.log(err))
+
+
     }
 
     confirmacion=()=>{
         document.getElementsByClassName("confirmacionProducto")[0].style.display="none"
     }
-
 
     render() {
         return (
@@ -62,7 +69,7 @@ export default class FormProducto extends Component {
 
             
             <div>
-                <h1 className="titulo-agregar">Agregar un producto</h1>
+                <h1 className="titulo-agregar">Editar un producto</h1>
 
 
                 <div className="width-producto">
@@ -73,7 +80,7 @@ export default class FormProducto extends Component {
                         <div className="segmento-producto">
                             <label>Nombre Del Producto</label>
 
-                            <input name="nombre" onChange={this.handlendChange} type="text"></input>
+                            <input name="nombre" onChange={this.handlendNombre} value={this.state.nombre} type="text"></input>
                             <h3 className="error-nombre">Error</h3>
                         </div>
 
@@ -81,8 +88,8 @@ export default class FormProducto extends Component {
                         <div className="segmento-producto">
 
                             <label>Clasificación</label>
-
-                            <select onChange={this.handlendChange} className="select-producto" name="clasificacion">
+        
+                            <select onChange={this.handlendClasifiacion} className="select-producto" name="clasificacion">
                                 <option>Seleccione una clasificación</option>
                                 <option>Dulce</option>
                                 <option>Pastillas</option>
@@ -96,15 +103,15 @@ export default class FormProducto extends Component {
 
                             <label>Precio</label>
 
-                            <input name="precio" onChange={this.handlendChange} type="text"></input>
+                            <input name="precio" value={this.state.precio} onChange={this.handlendPrecio} type="text"></input>
                             <h3 className="error-precio">Error</h3>
                         </div>
-                        <input className="btn-agregar-producto" onClick={this.agregar} type="button" value="Agregar"></input>
+                        <input className="btn-agregar-producto" onClick={this.editarProducto} type="button" value="Editar"></input>
                     </form>
                 </div>
 
                 <div className="confirmacionProducto">
-                    <h2>Se agregó un pruducto</h2>
+                    <h2>Se editó el pruducto</h2>
                     <Link to="producto" onClick={this.confirmacion} className="btn-aceptarProducto">Aceptar</Link>
                 </div>
 

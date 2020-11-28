@@ -1,5 +1,4 @@
 
-
 .titulo-agregar{
     margin: 40px;
     font-size: 40px;
@@ -70,3 +69,28 @@ h3 {
     padding: 5px;
     font-size: 15px;
 } 
+.confirmacionProducto{
+    background-color: white;
+    width: 33%;
+    height: 250px;
+    border: 1px solid black;
+    padding: 20px;
+    position: absolute;
+    top: 33%;
+    left: 33%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.btn-aceptarProducto{
+    background-color: teal;
+    margin: 20px auto;
+    width: 40%;
+    font-size: 1.5em;
+    border: 0px solid black;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+   
+}

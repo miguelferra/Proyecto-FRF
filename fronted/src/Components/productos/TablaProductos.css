@@ -29,16 +29,6 @@ table tr td{
     display: flex;
     justify-content: space-evenly;
 }
-button{
-    
-    padding: 20px 20px;
-    border-radius: 15px;
-    border: 0px solid black;
-    font-size: 0.9em;
-    color: white;
-    margin: 20px;
-}
-
 .btn-agregarProducto{
     background-color: rgb(31, 190, 92);
 }
@@ -54,5 +44,8 @@ a{
     color: white;
     border-radius: 20px;
     text-decoration: none;
+}
+.radio-producto{
+   text-align: center;
 }
 
