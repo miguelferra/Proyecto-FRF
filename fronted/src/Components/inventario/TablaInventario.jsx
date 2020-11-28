@@ -58,7 +58,7 @@ export default class TablaInventario extends Component {
     componentWillMount() {
         this.cargarInventario()
     }
-
+/*
     hand = (e) => {
         this.setState({ mia: e.target.value })
         console.log(this.state.mia)
@@ -87,11 +87,12 @@ export default class TablaInventario extends Component {
         this.setState({ inventario: listaNueva})
         this.setState({seleccion: ""})
     }
+    */
 
     render() {
         return (
             <div>
-                <div className="segmento-inventario">
+               
                     <h1 className="titulo-inventario">Tabla Inventario</h1>
                     <div className="scroll-inventario">
                         <table>
@@ -114,29 +115,9 @@ export default class TablaInventario extends Component {
                     <div className="boto">
                         <Link className="btn-editarInventario" onClick={this.editar} to="/inventarioEditar">Editar</Link>
                     </div>
-                </div>
+              
 
-                <div className="modal">
-                    <div className="width-inventario">
-                        <form>
-
-                            <div className="segmento-inventario">
-
-                                <label className="labele">Nombre Del Producto: </label>
-
-                                <input disabled name="nombre" value={this.state.inv.nombre} type="text"></input>
-                                <h3 className="error-nombre">Error</h3>
-                            </div>
-
-                            <div className="segmento-inventario">
-                                <label className="labele">Cantidad:</label>
-                                <input defaultValue={this.state.inv.cantidad}  id="cantidad" type="text" onChange={this.hand}   ></input>
-                                <h3 className="error-cantidad">Error</h3>
-                            </div>
-                            <Link className="btn-editarInventario" to="/inventario" onClick={this.editarCantidad} value="Agregar">Aceptar</Link>
-                        </form>
-                    </div>
-                </div>
+              
             </div>
 
         )

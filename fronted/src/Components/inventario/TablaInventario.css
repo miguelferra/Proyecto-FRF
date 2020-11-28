@@ -1,7 +1,5 @@
 
-.segmento-inventario{
-    opacity: 0.3;
-}
+
 table{
     border-collapse: collapse;
     margin: auto;
@@ -41,11 +39,4 @@ table tr td{
     display: flex;
     justify-content: center;
 }
-.modal{
-    position: absolute;
-    top: 33%;
-    left: 33%;
-    width: 33%;
 
-    margin: auto;
-}
