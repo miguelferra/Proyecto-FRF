@@ -7,7 +7,7 @@ table{
     font-size: 0.8em;
 
 }
-.scroll{
+.scroll-doctores{
     height: 60vh;
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -22,4 +22,20 @@ table th{
 }
 table tr td{
     padding: 3px;
+}
+.btn-agregarDoctor{
+    background-color: rgb(31, 190, 92);
+}
+.btn-editarDoctor{
+    background-color: rgb(19, 143, 143);
+}
+.btn-eliminarDoctor{
+    background-color: red;
+}
+.radio{
+    text-align: center;
+}
+.titulo-doctor{
+    margin: 20px;
+    text-align: center;
 }

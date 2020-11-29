@@ -66,7 +66,7 @@ export default class TablaProductos extends Component {
             }
         })
 
-        this.props.loadSeleccion(this.state.seleccion)
+       // this.props.loadSeleccion(this.state.seleccion)
         
 
     }
@@ -101,7 +101,8 @@ export default class TablaProductos extends Component {
                 <a onClick={this.eliminarProducto}  className="btn-eliminarProducto"  >Eliminar</a>
         
             </div>
-            
+
+
         
 
             </div>

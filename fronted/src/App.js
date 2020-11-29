@@ -9,6 +9,7 @@ import TablaDoctor from './Components/doctor/TablaDoctor'
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FormDoctor from './Components/doctor/FormDoctor';
 import FormProductoEditar from './Components/productos/FormProductoEditar';
+import FormDoctorEditar from './Components/doctor/FormDoctorEditar'
 
 
 const initialState={
@@ -22,6 +23,11 @@ const initialState={
     _id: "",
     nombre: "",
     cantidad: ""
+  },
+  datoDoctor:{
+    _id: "",
+    nombre: "",
+    cedula: ""
   },
   seleccion: ""
 }
@@ -48,19 +54,16 @@ class App extends Component{
       cantidad: data.cantidad
     }})
   }
+  loadDoc=(data)=>{
+    this.setState({datoDoctor:{
+      _id: data._id,
+      nombre: data.nombre,
+      cedula: data.cedula
+    }})
+  }
 
   
-  loadSeleccion=(dato)=>{
-    this.setState({seleccion: dato})
-  }
 
-  loadProductos =(data)=>{
-    this.setState({productos: data})
-  }
-
-  loadDoctores = (data)=>{
-    this.setState({doctores:data})
-  }
 
 
   render(){
@@ -74,7 +77,7 @@ class App extends Component{
             
             
             return <div>
-              <Menu loadProductos={this.loadProductos}  loadDoctores={this.loadDoctores} className="menu"></Menu>
+              <Menu className="menu"></Menu>
               
             </div>
           }}>
@@ -91,7 +94,7 @@ class App extends Component{
         <Route path="/productoAgregar" render={()=>{
           return <div>
             
-            <FormProducto productos={this.state.productos} loadProductos={this.loadProductos}></FormProducto>
+            <FormProducto></FormProducto>
           </div>
         }}>
         </Route>
@@ -126,12 +129,31 @@ class App extends Component{
 
         <Route path="/doctor" render={()=>{
           return <div>
-            <TablaDoctor loadProductos = {this.loadProductos} doctores={this.state.doctores}></TablaDoctor>
-            <FormDoctor></FormDoctor>
+            <TablaDoctor loadDoc={this.loadDoc}></TablaDoctor>
+        
           </div>
         }}>
 
         </Route>
+
+        <Route path="/doctorAgregar" render={()=>{
+          return <div>
+            <FormDoctor></FormDoctor>
+        
+          </div>
+        }}>
+        </Route>
+        <Route path="/doctorEditar" render={()=>{
+          return <div>
+            <FormDoctorEditar doctor={this.state.datoDoctor}></FormDoctorEditar>
+        
+          </div>
+        }}>
+        </Route>
+
+
+
+
         </Router>
       </div> 
         

@@ -6,17 +6,19 @@ form{
    
 }
 .width{
-    border: 1px solid black;
-    border-radius: 30px;
     width: 90%;
     margin: auto;
-    height: 30vh;
     
 }
-.segmento{
-    margin: auto;
-
-   
+.titulo-doctorAgregar{
+    margin: 40px;
+    font-size: 40px;
+    text-align: center;
+}
+.segmento-doctor{
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
 }
 h3 {
     text-align: center;
@@ -26,16 +28,8 @@ h3 {
     color: red;
     display: none;
 }
-select{
-    width: 200px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid black;
-}
-
-
-.segmento input{
-    width: 200px;
+.segmento-doctor input{
+    width: 400px;
     border-radius: 5px;
     border: 1px solid black;
     padding: 5px;
@@ -57,4 +51,29 @@ select{
     background-color: rgb(31, 190, 92);
     color: white;
     border: 0px ;
+}
+.confirmacionDoctor{
+    background-color: white;
+    width: 33%;
+    height: 250px;
+    border: 1px solid black;
+    padding: 20px;
+    position: absolute;
+    top: 33%;
+    left: 33%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.btn-aceptarDoctor{
+    background-color: teal;
+    margin: 20px auto;
+    width: 40%;
+    font-size: 1.5em;
+    border: 0px solid black;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+   
 }
