@@ -18,10 +18,10 @@ class Menu extends Component{
             <div className="full-width">
                 <nav className= "menu-head">
                     <ul className="menu-opciones">
-                        <li className="menu-opciones-listado"><a href = "/">Venta</a></li>
+                        <li className="menu-opciones-listado"><Link to="/venta">Venta</Link></li>
                         <li className="menu-opciones-listado"><Link to="/producto">Producto</Link></li>
                         <li className="menu-opciones-listado"><Link to="/inventario">Inventario  </Link> </li>
-                        <li><a href = "doctor"> Doctores </a></li>
+                        <li className="menu-opciones-listado"><Link to="/doctor">Doctor</Link></li>
                         
                     </ul>
                 </nav>

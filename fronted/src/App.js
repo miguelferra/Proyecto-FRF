@@ -10,6 +10,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FormDoctor from './Components/doctor/FormDoctor';
 import FormProductoEditar from './Components/productos/FormProductoEditar';
 import FormDoctorEditar from './Components/doctor/FormDoctorEditar'
+import TablaVenta from './Components/venta/TablaVenta'
 
 
 const initialState={
@@ -150,10 +151,13 @@ class App extends Component{
           </div>
         }}>
         </Route>
-
-
-
-
+        <Route path="/venta" render={()=>{
+          return <div>
+            <TablaVenta doctor={this.state.datoDoctor}></TablaVenta>
+        
+          </div>
+        }}>
+        </Route>
         </Router>
       </div> 
         
