@@ -1,10 +1,28 @@
 
+body{
+    
+}
+.centro{
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuadricula{
+    
+    width: 500px;
+    height: 500px;
+    background-color: rgba(255, 255, 255,0.5);
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
 .titulo-agregar{
     margin: 40px;
     font-size: 40px;
     text-align: center;
 }
-
 .form-producto{
     display: flex;
     flex-direction: column;
@@ -19,15 +37,11 @@
     margin: auto;
 }
 
-.segmento-producto{
-    margin: 10px;
-}
-
-h3 {
+span {
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
     position: relative;
-    left: 30px;
+    font-weight: 450;
     color: red;
     display: none;
 }
@@ -38,18 +52,9 @@ h3 {
     border: 1px solid black;
 }
 
-
-
-.labelito{
-    display: inline-block;
-    width: 200px;
-    text-align: right;
-    margin: 10px;
-    
-}
 .btn-agregar-producto{
-    width: 150px;
-    border-radius: 30px;
+    width: 400px;
+    border-radius: 5px;
     margin: 10px auto;
     padding: 10px;
     background-color: rgb(31, 190, 92);
@@ -59,15 +64,28 @@ h3 {
 .segmento-producto{
     display: flex;
     flex-direction: column;
-    width: 400px;
-    margin: 10px;
+    margin: 20px;
 }
 .segmento-producto input{
     width: 400px;
-    border-radius: 5px;
+    border-radius: 3px;
     border: 1px solid black;
-    padding: 5px;
+    padding: 10px;
     font-size: 15px;
+    background: rgba(24, 22, 22, 0.1);
+    
+}
+.segmento-producto label{
+    position: absolute;
+    padding: 10px;
+    z-index: -20;
+    color: rgba(0, 0, 0,0.6);
+    transition: 0.5s;
+    
+}
+.segmento-producto input:focus + label{
+    margin-top: -35px;
+    color: rgba(0, 0, 0);
 } 
 .confirmacionProducto{
     background-color: white;

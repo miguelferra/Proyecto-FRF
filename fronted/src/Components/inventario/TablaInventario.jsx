@@ -93,7 +93,7 @@ export default class TablaInventario extends Component {
         return (
             <div>
                
-                    <h1 className="titulo-inventario">Tabla Inventario</h1>
+                    <h1 className="titulo-inventario">Inventario</h1>
                     <div className="scroll-inventario">
                         <table>
                             <thead>
@@ -112,8 +112,8 @@ export default class TablaInventario extends Component {
                         </table>
 
                     </div>
-                    <div className="boto">
-                        <Link className="btn-editarInventario" onClick={this.editar} to="/inventarioEditar">Editar</Link>
+                    <div className="botones">
+                        <Link className="btn-editarProducto" onClick={this.editar} to="/inventarioEditar">Editar</Link>
                     </div>
               
 

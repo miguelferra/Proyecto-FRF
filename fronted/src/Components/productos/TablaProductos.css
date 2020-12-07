@@ -48,4 +48,29 @@ a{
 .radio-producto{
    text-align: center;
 }
+.confirmar-eliminar{
+    text-align: center;
+    width: 33%;
+    display: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    position: absolute;
+    left: 33%;
+    top: 33%;
+
+    padding: 40px;
+}
+.confirmar-eliminar h4{
+    margin-bottom: 15px;
+}
+.confirmar-eliminar button{
+    color: white;
+    padding: 15px 30px;
+    border: 0px solid black;
+    border-radius: 5px;
+}
+h4{
+    font-size: 25px;
+}
 

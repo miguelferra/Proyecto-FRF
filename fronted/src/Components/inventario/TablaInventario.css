@@ -30,13 +30,5 @@ table th{
 table tr td{
     padding: 3px;
 }
-.btn-editarInventario{
-    background-color:lightseagreen;
-    text-align: center;
 
-}
-.boto{
-    display: flex;
-    justify-content: center;
-}
 

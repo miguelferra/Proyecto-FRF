@@ -6,16 +6,21 @@
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 20% 40% 30% 10%;
+    grid-template-rows: 20% 40% 20% 20%;
   
 }
 .segmento-busqueda{
+    padding: 10px;
+    font-size: 30px;
     grid-column: 1/2 ;
     grid-row: 1/2;
     
 }
+.segmento-busqueda input{
+    font-size: 20px;
+}
 .segmento-productoVenta{
-    background-color: blueviolet;
+    border: 1px solid black;
     grid-column: 1/2;
     grid-row: 2/4;
 }
@@ -24,13 +29,82 @@
     grid-row: 1/3;
 }
 .segmento-doctorVenta{
-    background-color:darkorange;
+    margin: 10px;
     grid-column: 1/2;
     grid-row: 4/5;
 }
 
 .segmento-total{
-    background-color: darkgreen;
+    font-size: 30px;
     grid-column: 2/3;
     grid-row: 3/5;
+}
+.radio{
+    text-align: center;
+}
+.producto-inventario{
+    width: 50%;
+    height: 40px;
+    background-color: #D0A5C0 ;
+    color: white;
+    border: 1px solid black;;
+}
+.producto-inventario:hover{
+    background-color:#8E7C93 ;
+    
+}
+.input-nombre{
+    margin: 10px;
+    font-size: 30px;
+}
+.input-total{
+    
+    font-size: 30px;
+    width: 100px;
+}
+.input-nombre-seleccionado{
+    width: 300px;
+}
+.input-cantidad{
+    width: 80px;
+    margin: 10px;
+}
+.btn-agregar-seleccionado{
+    color: white;
+    background-color:violet;
+    padding: 5px 20px;
+    border: 0px;
+    border-radius: 5px;
+}
+.combobox-clasificaciones{
+    margin: 10px;
+    font-size: 20px;
+}
+.combobox-doctor{
+    width: 300px;
+    font-size: 20px;
+}
+.btn-cobrar{
+    margin: auto;
+    display: block;
+    padding: 20px 30px;
+    font-size: 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+.total-input{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+.total-input label{
+ margin-right: 10px;
+}
+.btn-eliminar-seleccionado{
+    background-color: rgba(241, 19, 19, 0.651);
+    border: none;
+    padding: 5px 10px;
+    color: white;
 }

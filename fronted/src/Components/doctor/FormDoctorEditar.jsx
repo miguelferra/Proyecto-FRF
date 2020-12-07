@@ -29,6 +29,11 @@ export default class FormDoctorEditar extends Component {
     }
     
 
+    componentDidMount(){
+        document.getElementById("label-nombre").style.marginTop = "-35px"
+        document.getElementById("label-cedula").style.marginTop = "-35px"
+        
+    }
     
 
     editarDoctor = () => {
@@ -48,45 +53,85 @@ export default class FormDoctorEditar extends Component {
             })
 
         }).then(response => response.json())
-            .then()
+            .then(document.getElementsByClassName("confirmacionDoctor")[0].style.display="flex")
             .catch(err => console.log(err))
 
 
     }
 
-    confirmacion=()=>{
-        document.getElementsByClassName("confirmacionDoctor")[0].style.display="none"
+    ventanaConfirmacion=()=>{
+       if(this.validarNombre()===false || this.validarCedula()===false){
+           return false
+       }
+
+       this.editarDoctor();
+    }
+
+    validarNombre=()=>{
+        const expNombre= RegExp(/^[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,-]{1,35}$/)
+        const nombretrim = this.state.nombre.trim().replace(/\s\s+/g, ' ')
+    
+        if(nombretrim === "" || !expNombre.test(nombretrim)){
+            document.getElementById("nombre").style.border = "1px solid red"
+            document.getElementById("error-nombre-doctor").style.display="flex"
+            return false
+        }
+        else{
+            document.getElementById("error-nombre-doctor").style.display="none"
+            document.getElementById("nombre").style.border = "1px solid black"
+            return true
+        }
+    }
+
+    validarCedula=()=>{
+        const expCedula= RegExp(/^[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,-]{1,20}$/)
+        const cedulatrim = this.state.cedula.trim().replace(/\s\s+/g, ' ')
+    
+        if(cedulatrim === "" || !expCedula.test(cedulatrim)){
+            document.getElementById("cedula").style.border = "1px solid red"
+            document.getElementById("error-cedula-doctor").style.display="flex"
+            return false
+        }
+        else{
+            document.getElementById("error-cedula-doctor").style.display="none"
+            document.getElementById("cedula").style.border = "1px solid black"
+            return true
+        }
     }
 
     render() {
         return (
 
-            <div className="width">
+            <div className="centro">
+            <div className="cuadricula">
 
-            <h1 className="titulo-doctorAgregar">Nuevo Doctor</h1>
+            <h1 className="titulo-doctorAgregar">Editar Doctor</h1>
 
             <form>
                 <div className="segmento-doctor">
-                    <label>Nombre Del Doctor</label>
+                <input name="nombre" id="nombre" value={this.state.nombre} onChange={this.handlendNombre} type="text"></input>
+                    <label id="label-nombre">Nombre Del Doctor</label>
                    
-                    <input name="nombre" value={this.state.nombre} onChange={this.handlendNombre} type="text"></input>
-                <h3 className="error-nombre">Error</h3>
+                    
+                <span id="error-nombre-doctor">*Campo incorrecto</span>
                 </div>
 
                 <div className="segmento-doctor">
-                    <label>Cedula</label>
+                <input  name="cedula" id="cedula" value={this.state.cedula} onChange={this.handlendCedula} type="text"></input>
+                    <label id="label-cedula">Cedula</label>
 
-                <input  name="cedula" value={this.state.cedula} onChange={this.handlendCedula} type="text"></input>
-                <h3 className="error-cantidad">Error</h3>
+                
+                <span id="error-cedula-doctor">*Campo incorrecto</span>
                 </div>
 
-                <input className="btn-agregar" onClick={this.editarDoctor} type="button" value="Agregar"></input>
+                <input className="btn-agregar" onClick={this.ventanaConfirmacion} type="button" value="Editar"></input>
             </form>
 
             <div className="confirmacionDoctor">
-                <h2>Se agregó un pruducto</h2>
-                <Link to="/doctor" onClick={this.confirmacion} className="btn-aceptarDoctor">Aceptar</Link>
+                <h2>Se editó un doctor</h2>
+                <Link to="/doctor" onClick={()=> document.getElementsByClassName("confirmacionDoctor")[0].style.display="none"} className="btn-aceptarDoctor">Aceptar</Link>
             </div>
+        </div>
         </div>
 
            

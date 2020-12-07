@@ -29,20 +29,26 @@ export default class FormProducto extends Component {
 
     }
 
+    componentDidUpdate(){
+        this.state.nuevoProducto.nombre.length>0 ?  document.getElementById("label-nombre").style.marginTop = "-35px":document.getElementById("label-nombre").style.marginTop = "0px"
+        this.state.nuevoProducto.precio.length>0 ?  document.getElementById("label-precio").style.marginTop = "-35px":document.getElementById("label-precio").style.marginTop = "0px"
+        
+    }
+
     
 
     agregar = () => {
         
-        document.getElementsByClassName("confirmacionProducto")[0].style.display="flex"
+        
         fetch(`http://localhost:3000/FRF/productos`, {
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
             method: 'post',
             body: JSON.stringify({
-                nombre: this.state.nuevoProducto.nombre /*this.state.form.nombre.trim().replace(/\s\s+/g, ' ')*/,
+                nombre: this.state.nuevoProducto.nombre.trim().replace(/\s\s+/g, ' '),
                 clasificacion: this.state.nuevoProducto.clasificacion,
-                precio: this.state.nuevoProducto.precio
+                precio: this.state.nuevoProducto.precio.trim().replace(/\s\s+/g, ' ')
             })
 
         }).then(response => response.json())
@@ -50,8 +56,64 @@ export default class FormProducto extends Component {
             .catch(err => console.log(err))
     }
 
-    confirmacion=()=>{
-        document.getElementsByClassName("confirmacionProducto")[0].style.display="none"
+    ventanaConfirmacion=()=>{
+        this.validarNombre()
+        this.validarClasificacion()
+        this.validarPrecio()
+
+        if(this.validarNombre()===false || this.validarClasificacion()===false || this.validarPrecio()===false){
+            return false;
+        }
+
+        this.agregar();
+
+        document.getElementsByClassName("confirmacionProducto")[0].style.display="flex"
+    }
+
+
+    validarNombre=()=>{
+        const expNombre= RegExp(/^[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,-]{1,35}$/)
+        const nombretrim = this.state.nuevoProducto.nombre.trim().replace(/\s\s+/g, ' ')
+    
+        if(nombretrim === "" || !expNombre.test(nombretrim)){
+            document.getElementById("nombre").style.border = "1px solid red"
+            document.getElementById("error-nombre-producto").style.display="flex"
+            return false
+        }
+        else{
+            document.getElementById("error-nombre-producto").style.display="none"
+            document.getElementById("nombre").style.border = "1px solid black"
+            return true
+        }
+    }
+
+    validarClasificacion=()=>{
+        const clas = this.state.nuevoProducto.clasificacion
+        if (clas === "" || clas==="Seleccione una clasificación" || clas===undefined){
+            document.getElementById("error-clasificacion-producto").style.display="flex"
+            console.log(clas);
+            return false
+        }
+        else{
+            document.getElementById("error-clasificacion-producto").style.display="none"
+            return true
+        }
+    }
+
+    validarPrecio=()=>{
+        const expPrecio= RegExp(/^\d{1,3}(,\d{3})*(\.\d+)?$/)
+        const preciotrim = this.state.nuevoProducto.precio.trim().replace(/\s\s+/g, ' ')
+    
+        if(preciotrim === "" ||  !expPrecio.test(preciotrim)){
+            document.getElementById("error-precio-producto").style.display="flex"
+            document.getElementById("precio").style.border = "1px solid red"
+            return false
+        }
+        else{
+            document.getElementById("error-precio-producto").style.display="none"
+            document.getElementById("precio").style.border = "1px solid black"
+            return true
+        }
     }
 
 
@@ -60,8 +122,10 @@ export default class FormProducto extends Component {
 
             
 
+            <div className="centro">
+
             
-            <div>
+            <div className="cuadricula">
                 <h1 className="titulo-agregar">Agregar un producto</h1>
 
 
@@ -71,16 +135,18 @@ export default class FormProducto extends Component {
                     <form className="form-producto">
 
                         <div className="segmento-producto">
-                            <label>Nombre Del Producto</label>
 
-                            <input name="nombre" onChange={this.handlendChange} type="text"></input>
-                            <h3 className="error-nombre">Error</h3>
+                        <input  name="nombre" id="nombre" onChange={this.handlendChange} type="text"></input>    
+                        <label id ="label-nombre">Nombre Del Producto</label>
+
+                            
+                            <span id="error-nombre-producto">*Campo incorrecto</span>
                         </div>
 
 
                         <div className="segmento-producto">
 
-                            <label>Clasificación</label>
+                           
 
                             <select onChange={this.handlendChange} className="select-producto" name="clasificacion">
                                 <option>Seleccione una clasificación</option>
@@ -88,29 +154,29 @@ export default class FormProducto extends Component {
                                 <option>Pastillas</option>
                                 <option>Otros</option>
                             </select>
-                            <h3 className="error-clasificacion">Error</h3>
+                            <span id="error-clasificacion-producto">*Eliga una opción valida</span>
                         </div>
 
 
                         <div className="segmento-producto">
+                        <input  name="precio" id="precio" onChange={this.handlendChange} type="number"></input>
+                            <label id="label-precio">Precio</label>
 
-                            <label>Precio</label>
-
-                            <input name="precio" onChange={this.handlendChange} type="text"></input>
-                            <h3 className="error-precio">Error</h3>
+                            
+                            <span id="error-precio-producto">*Campo incorrecto</span>
                         </div>
-                        <input className="btn-agregar-producto" onClick={this.agregar} type="button" value="Agregar"></input>
+                        <input className="btn-agregar-producto" onClick={this.ventanaConfirmacion} type="button" value="Agregar"></input>
                     </form>
                 </div>
 
                 <div className="confirmacionProducto">
                     <h2>Se agregó un pruducto</h2>
-                    <Link to="producto" onClick={this.confirmacion} className="btn-aceptarProducto">Aceptar</Link>
+                    <Link to="producto" onClick={()=>document.getElementsByClassName("confirmacionProducto")[0].style.display="none"} className="btn-aceptarProducto">Aceptar</Link>
                 </div>
 
 
             </div>
-
+            </div>
            
         )
     }

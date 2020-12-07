@@ -43,7 +43,7 @@ export default class TablaDoctor extends Component {
             }),
             method: 'delete',
         }).then(response => response.json())
-            .then()
+            .then(document.getElementsByClassName("confirmar-eliminar")[0].style.display="none")
             .catch(err => console.log(err))
     }
 
@@ -59,11 +59,9 @@ export default class TablaDoctor extends Component {
                 this.props.loadDoc(doc);
             }
         })
-
-
-        //this.props.loadSeleccion(this.state.seleccion)
-        
-
+    }
+    ventanaEliminar=()=>{
+        document.getElementsByClassName("confirmar-eliminar")[0].style.display="block"
     }
 
     render() {
@@ -90,8 +88,16 @@ export default class TablaDoctor extends Component {
                 <div className="botones">
                     <Link className="btn-agregarDoctor" to="/doctorAgregar">Agregar</Link>
                     <Link className="btn-editarDoctor" to="/doctorEditar" onClick={this.editarDoctor} >Editar</Link>
-                    <a className="btn-eliminarDoctor" onClick={this.eliminarDoctor}>Eliminar</a>
+                    <a className="btn-eliminarDoctor" onClick={this.ventanaEliminar}>Eliminar</a>
                 </div>
+                <div className="confirmar-eliminar"> 
+                    <h4>¿Estás seguro que quieres eliminar?</h4>
+                    <div className="botones">
+                        <button className="btn-agregarProducto" onClick={this.eliminarDoctor}>Aceptar</button>
+                        <button className="btn-eliminarProducto"onClick={()=>document.getElementsByClassName("confirmar-eliminar")[0].style.display="none"} >Cancelar</button>
+                    </div>
+                    </div>
+                
             </div>
         )
     }
