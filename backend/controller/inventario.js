@@ -6,18 +6,41 @@ const agregar = async(producto) =>{
         inventario.idProducto = producto;
         await inventario.save();
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
 const obtenerInventario = async(req, res)=>{
-    const inventario = await inventarioModel.find().populate('idProducto');
-    res.json(inventario);
+    try{
+        const inventario = await inventarioModel.find().populate('idProducto');
+        res.json(inventario);
+    }catch (error) {
+        res.status(404).send(error);
+    }
+}
+
+const ventaInventario = async(idProducto,cantidadVenta)=>{
+    try{
+    const inventario = await inventarioModel.find({idProducto: {$eq: idProducto}}).populate('idProducto');
+    if(inventario[0].cantidad >= cantidadVenta){
+        var cantidad = (inventario[0].cantidad - cantidadVenta);
+        await inventarioModel.findByIdAndUpdate(inventario[0]._id, {cantidad});
+        return true;
+    }else{
+        return false;
+    }
+    }catch (error) {
+    return  false;
+    }
 }
 
 const obtenerInventarioExistente = async(req,res) =>{
+    try{
     const inventarioExistente = await inventarioModel.find({cantidad: {$gt: 0}}).populate('idProducto');
     res.json(inventarioExistente);
+    }catch (error) {
+        res.status(404).send(error);
+    }
 }
 
 const modificar = async (req,res)=>{
@@ -27,7 +50,7 @@ const modificar = async (req,res)=>{
         await inventarioModel.findByIdAndUpdate(_id, {cantidad});
         res.send(`Se ha actualizado el inventario`);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -37,7 +60,7 @@ const eliminar = async (id) =>{
     const inventarioEncontrado = await inventarioModel.find({idProducto: {$eq: id}});
     await inventarioModel.findByIdAndDelete(inventarioEncontrado[0]._id);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
     
 }
@@ -46,6 +69,7 @@ const eliminar = async (id) =>{
 module.exports = {
     agregar,
     obtenerInventario,
+    ventaInventario,
     obtenerInventarioExistente,
     modificar,
     eliminar

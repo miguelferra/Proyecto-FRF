@@ -13,7 +13,7 @@ const agregar = async(req, res) =>{
 
     res.send(`${producto.nombre} ha sido creado`);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -22,7 +22,7 @@ const obtenerProductos = async(req, res)=>{
         const productos = await productosModel.find();
         res.json(productos);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -36,7 +36,7 @@ const obtenerProductoNombre = async(req, res) =>{
             res.json(productosNombre);
         } 
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -45,7 +45,7 @@ const obtenerProductoID = async(id) =>{
             const producto =  await productosModel.findById(id);
             return producto;
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 const obtenerProductosClasificacion = async(req,res) =>{
@@ -58,7 +58,7 @@ const obtenerProductosClasificacion = async(req,res) =>{
             res.json(productosClas);
         } 
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -67,7 +67,7 @@ const obtenerClasificaciones = async(req,res) =>{
         let productosClas = ["Antibiotico","Analgesico","Antialérgico","Antidiarreico","Antiinflamatorios", "Suplemento","Vitamina","Crema","Higiene","Shampoo","Jarabe","Otro"]
         res.send(productosClas);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -78,7 +78,7 @@ const modificar = async (req,res)=>{
         await productosModel.findByIdAndUpdate(_id, {nombre, clasificacion, precio});
         res.send(`${nombre} ha sido actualizado`);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 }
 
@@ -90,7 +90,7 @@ const eliminar = async (req,res) =>{
         inventarioController.eliminar(id);
         res.send(`Eliminado el producto`);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
     
 }

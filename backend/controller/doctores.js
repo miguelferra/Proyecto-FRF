@@ -7,7 +7,7 @@ const agregar = async(req, res) =>{
     
         res.send(`${doctor.id}`);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }
 
 }
@@ -17,7 +17,7 @@ const obtenerDoctores= async(req, res)=>{
         const doctor = await doctoresModel.find();
         res.json(doctor);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }    
 }
 
@@ -28,7 +28,7 @@ const modificar = async (req,res)=>{
         await doctoresModel.findByIdAndUpdate(_id,  {nombre, cedula});
     res.send(`Se ha actualizado el doctor`);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }   
 }
 
@@ -38,7 +38,7 @@ const eliminar = async (req,res) =>{
         await doctoresModel.deleteOne({_id});
         res.send(`Eliminado`);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(404).send(error);
     }  
 }
 
