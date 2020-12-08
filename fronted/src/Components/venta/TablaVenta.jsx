@@ -1,31 +1,34 @@
 import React, { Component } from 'react'
 import './TablaVenta.css'
-
+import { Link } from 'react-router-dom';
 import SegmentoDetalleProducto from './SegmentoDetalleProducto'
 
 export default class TablaVenta extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            inventario:[],
-            doctores:[],
+        this.state = {
+            inventario: [],
+            doctores: [],
             busqueda: [],
             nombre: "",
-            productoSeleccionado:{
+            productoSeleccionado: {
                 _id: "",
                 nombre: "",
                 clasifiacion: "",
                 precio: "",
-                cantidad: ""
+                cantidad: "",
+                idProducto: ""
             },
             doctorSeleccionado: "",
             productosDetalles: [],
             total: ""
         }
+
     }
 
 
-    componentWillMount(){
+
+    componentWillMount() {
         this.cargarInventario()
         this.cargarDoctores()
     }
@@ -43,7 +46,7 @@ export default class TablaVenta extends Component {
             }).catch(err => console.log(err))
     }
 
-    cargarDoctores=()=>{
+    cargarDoctores = () => {
         fetch(`http://localhost:3000/FRF/doctores`, {
             method: 'get',
             headers: new Headers({
@@ -55,82 +58,172 @@ export default class TablaVenta extends Component {
                 this.setState({ doctores: data })
             }).catch(err => console.log(err))
     }
-    
 
-    seleccionProducto=(e)=>{
-        this.state.inventario.map(inv => { 
-            if(inv._id === e.target.value){
-                this.setState({productoSeleccionado:  { 
-                    _id: e.target.value,
-                    nombre: inv.idProducto.nombre,
-                    clasificacion: inv.idProducto.clasificacion,
-                    precio: inv.idProducto.precio,
-                    cantidad: 1
-                }
-            })
-        }})
-        document.getElementById("cantidad").value="1"
+
+    seleccionProducto = (e) => {
+        this.state.inventario.map(inv => {
+            if (inv._id === e.target.value) {
+                this.setState({
+                    productoSeleccionado: {
+                        _id: e.target.value,
+                        nombre: inv.idProducto.nombre,
+                        clasificacion: inv.idProducto.clasificacion,
+                        precio: inv.idProducto.precio,
+                        cantidad: 1,
+                        idProducto: inv.idProducto._id
+                    }
+
+                })
+                console.log(inv)
+            }
+        })
+        console.log(this.state.productoSeleccionado)
+        document.getElementById("cantidad").value = "1"
 
     }
 
-    agregarProducto=()=>{
+    agregarProducto = () => {
+        let estado = true
+        this.state.inventario.map(inv => {
+            if(inv._id === this.state.productoSeleccionado._id){
+                if(inv.cantidad<this.state.productoSeleccionado.cantidad){
+                    estado = false
+                }
+            }
+
+        }
+
+
+        )
+        if (this.state.productoSeleccionado.cantidad <= 0 || estado ===false) {
+            return false
+        }
+
+
         const lista = this.state.productosDetalles
         lista.push(this.state.productoSeleccionado)
-        this.setState({productosDetalles: lista})
+        this.setState({ productosDetalles: lista })
 
-        this.setState({productoSeleccionado: {
-            _id: "",
-            nombre: "",
-            clasifiacion: "",
-            cantidad: "",
-            precio: ""
-        }})
-        document.getElementById("cantidad").value=""
+
+
+        this.setState({
+            productoSeleccionado: {
+                _id: "",
+                nombre: "",
+                clasifiacion: "",
+                cantidad: "",
+                precio: "",
+                idProducto: ""
+            }
+        })
+        document.getElementById("cantidad").value = ""
+
+
 
         this.total(this.state.productosDetalles)
-        
+
     }
 
-    total=(lista)=>{
+    total = (lista) => {
         let total = 0
-        lista.map(det => 
-            total=(det.precio*det.cantidad)+total)
+        lista.map(det =>
+            total = (det.precio * det.cantidad) + total)
 
-        this.setState({total: total})
+        this.setState({ total: total })
     }
 
-    handleChange=(e)=>{
-        this.setState({productoSeleccionado: { 
-            ...this.state.productoSeleccionado,
-            [e.target.name] : e.target.value
-        }
-       
-    })
+    handleChange = (e) => {
+        this.setState({
+            productoSeleccionado: {
+                ...this.state.productoSeleccionado,
+                [e.target.name]: e.target.value
+            }
+
+        })
     }
 
-    handleDoctor=(e)=>{
-        this.setState({doctorSeleccionado: e.target.value})
-        console.log(this.state.doctorSeleccionado)
+    handleDoctor = (e) => {
+        console.log(e.target)
+        this.setState({ doctorSeleccionado: e.target.value })
+
     }
 
-    eliminarProductoDetalle=e=>{
+    eliminarProductoDetalle = e => {
         const lista = this.state.productosDetalles.filter(pro => pro._id !== e.target.name);
-        this.setState({productosDetalles: lista})
+        this.setState({ productosDetalles: lista })
         this.total(lista)
     }
-    busquedaClasificacion=e=>{
-        let lista=[]
+    busquedaClasificacion = e => {
+        let lista = []
 
-        if(e.target.value === "Todas"){
+        if (e.target.value === "Todas") {
             lista = this.state.inventario
         }
-        else{
+        else {
             lista = this.state.inventario.filter(det => det.idProducto.clasificacion == e.target.value)
         }
-        this.setState({busqueda: lista})
+        this.setState({ busqueda: lista })
     }
-    busquedaInput=e=>{
-            this.setState({nombre: e.target.value})
+    busquedaInput = e => {
+        this.setState({ nombre: e.target.value })
+    }
+
+
+    agregarVenta = () => {
+        if (this.validacionVenta() === false) {
+            return false
+        }
+
+        fetch(`http://localhost:3000/FRF/ventas`, {
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            method: 'post',
+            body: JSON.stringify({
+                idDoctor: this.state.doctorSeleccionado,
+                detalle: this.listaDetalleVenta(),
+                total: this.state.total
+
+            })
+
+        }).then(response => response.json())
+            .then(this.ventanaConfirmacion())
+            .catch(err => console.log(err))
+    }
+
+    ventanaConfirmacion = () => {
+        document.getElementsByClassName("confirmacionProducto")[0].style.display = "flex"
+        this.setState({ productosDetalles: [], doctorSeleccionado: "", total: "", })
+
+        this.setState({
+            productoSeleccionado: {
+                _id: "",
+                nombre: "",
+                clasifiacion: "",
+                cantidad: "",
+                precio: "",
+                idProducto: ""
+            }
+        })
+
+        this.cargarInventario()
+    }
+
+    validacionVenta = () => {
+        if (this.state.productosDetalles.length === 0 || this.state.doctorSeleccionado === "") {
+            return false
+        }
+        else return true
+    }
+
+    listaDetalleVenta = () => {
+        const lista = []
+        this.state.productosDetalles.map(pro => {
+            let obj = { idProducto: pro.idProducto, cantidad: pro.cantidad, precio: pro.cantidad * pro.precio };
+            lista.push(obj);
+
+        })
+        return lista
     }
 
     render() {
@@ -139,8 +232,8 @@ export default class TablaVenta extends Component {
         });
         return (
             <div className="container" >
-                
-                
+
+
                 <div className="segmento-busqueda">
                     <div className="nombre-busqueda">
                         <label>Producto</label>
@@ -159,59 +252,69 @@ export default class TablaVenta extends Component {
 
                     <div className="producto-seleccionado">
                         <input className="input-nombre-seleccionado" value={this.state.productoSeleccionado.nombre} disabled type="text"></input>
-                        <input className="input-cantidad" id="cantidad"  onChange={this.handleChange}  name="cantidad" defaultValue={this.state.productoSeleccionado.cantidad} type="text"></input>
+                        <input className="input-cantidad" id="cantidad" onChange={this.handleChange} name="cantidad" defaultValue={this.state.productoSeleccionado.cantidad} type="number"></input>
                         <input className="btn-agregar-seleccionado" onClick={this.agregarProducto} type="button" value="Agregar"></input>
                     </div>
 
                 </div>
-                
-                    
+
+
                 <div className="segmento-productoVenta">
-                    {lista.map(inv => 
-                        <button className="producto-inventario"  key={inv._id} value={inv._id} onClick={this.seleccionProducto}   >{inv.idProducto.nombre}</button>
-                        )}
+                    {lista.map(inv =>
+                        <button className="producto-inventario" key={inv._id} value={inv._id} onClick={this.seleccionProducto}   >{inv.idProducto.nombre}</button>
+                    )}
 
                 </div>
 
 
 
                 <div className="segmento-detalleProductos">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Importe</th>
-                                    <th>Controlador</th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody>
-                                {this.state.productosDetalles.map(det => 
-                                    <SegmentoDetalleProducto cargarIDetalle={this.cargarIDetalle} eliminar={this.eliminarProductoDetalle} det={det}></SegmentoDetalleProducto>
-                                )}
-                            </tbody>
-                        </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Importe</th>
+                                <th>Controlador</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {this.state.productosDetalles.map(det =>
+                                <SegmentoDetalleProducto cargarIDetalle={this.cargarIDetalle} eliminar={this.eliminarProductoDetalle} det={det}></SegmentoDetalleProducto>
+                            )}
+                        </tbody>
+                    </table>
 
                 </div>
                 <div className="segmento-doctorVenta">
                     <select className="combobox-doctor" onChange={this.handleDoctor}>
                         <option>Seleccione un doctor</option>
-                        {this.state.doctores.map(doc => 
-                            <option>{doc.nombre}</option> 
-                           )}
+                        {this.state.doctores.map(doc =>
+                            <option value={doc._id}>{doc.nombre}</option>
+
+
+
+
+                        )}
                     </select>
 
 
                 </div>
                 <div className="segmento-total">
-                    <div className= "total-input">
-                    <label>Total</label>
-                    <input className="input-total" value={this.state.total} readOnly></input>
+                    <div className="total-input">
+                        <label>Total</label>
+                        <input className="input-total" value={this.state.total} readOnly></input>
                     </div>
-                    
-                    <button className="btn-cobrar">Cobrar</button>
+
+                    <button onClick={this.agregarVenta} className="btn-cobrar">Cobrar</button>
+                </div>
+
+
+                <div className="confirmacionProducto">
+                    <h2>Se realizó correctamente la venta</h2>
+                    <Link to="venta" onClick={() => document.getElementsByClassName("confirmacionProducto")[0].style.display = "none"} className="btn-aceptarProducto">Aceptar</Link>
                 </div>
             </div>
         )

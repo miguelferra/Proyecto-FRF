@@ -160,9 +160,16 @@ export default class FormProductoEditar extends Component {
         
                             <select onChange={this.handlendClasifiacion} className="select-producto" name="clasificacion">
                                 <option>Seleccione una clasificación</option>
-                                <option>Dulce</option>
-                                <option>Pastillas</option>
-                                <option>Otros</option>
+                                <option>ANTIBIOTICO</option>
+                                <option>SUPLEMENTO</option>
+                                <option>VITAMINA</option>
+                                <option>BALSAMO</option>
+                                <option>ANALGESICO</option>
+                                <option>PLACEBO</option>
+                                <option>CREMA</option>
+                                <option>HIGIENE</option>
+                                <option>SHAMPOO</option>
+                                <option>OTROS</option>
                             </select>
                             <span id="error-clasificacion-producto">Campo incorrecto</span>
                         </div>
