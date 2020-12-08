@@ -11,8 +11,13 @@ const agregar = async(producto) =>{
 }
 
 const obtenerInventario = async(req, res)=>{
-        const inventario = await inventarioModel.find().populate('idProducto');
-        res.json(inventario);
+    const inventario = await inventarioModel.find().populate('idProducto');
+    res.json(inventario);
+}
+
+const obtenerInventarioExistente = async(req,res) =>{
+    const inventarioExistente = await inventarioModel.find({cantidad: {$gt: 0}}).populate('idProducto');
+    res.json(inventarioExistente);
 }
 
 const modificar = async (req,res)=>{
@@ -41,6 +46,7 @@ const eliminar = async (id) =>{
 module.exports = {
     agregar,
     obtenerInventario,
+    obtenerInventarioExistente,
     modificar,
     eliminar
 }

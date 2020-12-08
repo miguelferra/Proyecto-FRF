@@ -31,7 +31,7 @@ export default class TablaVenta extends Component {
     }
 
     cargarInventario = () => {
-        fetch(`http://localhost:3000/FRF/inventario`, {
+        fetch(`http://localhost:3000/FRF/inventario/existencia`, {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'

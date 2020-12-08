@@ -5,7 +5,6 @@ const {Schema} = mongoose;
 const schema = new Schema({
     idDoctor: {type: Schema.Types.ObjectId, ref: "doctores"},
     detalle: {type: Schema.Types.Array, ref: "detalleVenta"},
-    fecha:{type:String, required: true},
     total:{type:Number, required: true}
 },{timestamps:true});
 

@@ -40,6 +40,14 @@ const obtenerProductoNombre = async(req, res) =>{
     }
 }
 
+const obtenerProductoID = async(id) =>{
+    try{
+            const producto =  await productosModel.findById(id);
+            return producto;
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
 const obtenerProductosClasificacion = async(req,res) =>{
     try{
         const {clasificacion} = req.params;
@@ -49,6 +57,15 @@ const obtenerProductosClasificacion = async(req,res) =>{
         }else{
             res.json(productosClas);
         } 
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
+const obtenerClasificaciones = async(req,res) =>{
+    try{
+        let productosClas = ["Antibiotico","Analgesico","Antialérgico","Antidiarreico","Antiinflamatorios", "Suplemento","Vitamina","Crema","Higiene","Shampoo","Jarabe","Otro"]
+        res.send(productosClas);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -81,6 +98,8 @@ const eliminar = async (req,res) =>{
 module.exports = {
     agregar,
     obtenerProductos,
+    obtenerProductoID,
+    obtenerClasificaciones,
     obtenerProductosClasificacion,
     obtenerProductoNombre,
     modificar,

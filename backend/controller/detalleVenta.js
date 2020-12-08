@@ -1,6 +1,6 @@
 const {modelosMongoDB:{detalleVentaModel}} = require("../database/index");
 
-const agregar = async(producto) =>{
+const agregar = async(req, res) =>{
     try{
         const detalleVenta = new detalleVentaModel(req.body);
         await detalleVenta.save();
@@ -17,7 +17,7 @@ const obtenerDetalle= async(req, res)=>{
         const doctor = await doctoresModel.find();
         res.json(doctor);
     }catch (error) {
-        res.status(400).send(error);
+        res.status(400).send(error);    
     }    
 }
 
