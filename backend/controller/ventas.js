@@ -7,24 +7,18 @@ const agregar = async(req,res) =>{
     const { idDoctor, detalle, total } = req.body;
     try{
         const venta = new ventasModel({ idDoctor, detalle, total });
-        if(cambiarInventario(detalle) == true){
-            await venta.save();
-            res.json("Se registro correctamente");
-        }else{
-            res.json("No hay inventario disponible");
-        }
+        cambiarInventario(detalle);
+        await venta.save();
+        res.json("Se registro correctamente");
     } catch (error) {
         res.status(400).send(error);
     }
 }
 
 const cambiarInventario = async(detalle) =>{
-    let estado;
     for (var i = 0; i < detalle.length; i++) {
-        estado = await inventarioController.ventaInventario(detalle[i].idProducto,detalle[i].cantidad);
+        await inventarioController.ventaInventario(detalle[i].idProducto,detalle[i].cantidad);
     }
-    console.log(estado);
-    return estado;
 }
 
 /** Preguntar a Ramses
