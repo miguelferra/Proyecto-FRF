@@ -1,19 +1,24 @@
 const {modelosMongoDB:{ventasModel}} = require("../database/index");
-const productosController = require("./productos");
+const inventarioController = require("./inventario");
 
-//Esto
+
 const agregar = async(req,res) =>{
     //Recibe idDoctor, detalles, fecha, total
     const { idDoctor, detalle, total } = req.body;
+    try{
+        const venta = new ventasModel({ idDoctor, detalle, total });
+        cambiarInventario(detalle);
+        await venta.save();
+        res.json("Se registro correctamente");
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
 
-        try{
-            const venta = new ventasModel({ idDoctor, detalle, total });
-            //inventario.idProducto = producto;
-            await venta.save();
-            res.json("Se registro correctamente");
-        } catch (error) {
-            res.status(400).send(error);
-        }
+const cambiarInventario = async(detalle) =>{
+    for (var i = 0; i < detalle.length; i++) {
+        await inventarioController.ventaInventario(detalle[i].idProducto,detalle[i].cantidad);
+    }
 }
 
 /** Preguntar a Ramses

@@ -311,7 +311,7 @@ export default class TablaVenta extends Component {
                 </div>
                 <div className="segmento-total">
                     <div className="total-input">
-                        <label>Total</label>
+                        <label>Total $</label>
                         <input className="input-total" value={this.state.total} readOnly></input>
                     </div>
 
