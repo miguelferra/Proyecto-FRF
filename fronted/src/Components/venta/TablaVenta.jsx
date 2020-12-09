@@ -244,8 +244,15 @@ export default class TablaVenta extends Component {
                         <label>Clasificación</label>
                         <select className="combobox-clasificaciones" onChange={this.busquedaClasificacion}>
                             <option>Todas</option>
-                            <option>Dulce</option>
-                            <option>Pastillas</option>
+                            <option>ANTIBIOTICO</option>
+                                <option>SUPLEMENTO</option>
+                                <option>VITAMINA</option>
+                                <option>BALSAMO</option>
+                                <option>ANALGESICO</option>
+                                <option>PLACEBO</option>
+                                <option>CREMA</option>
+                                <option>HIGIENE</option>
+                                <option>SHAMPOO</option>
                             <option>Otros</option>
                         </select>
                     </div>
