@@ -264,6 +264,12 @@ export default class TablaVenta extends Component {
             }
         })
 
+       
+    }
+
+
+    restaurarInventario=()=>{
+        document.getElementsByClassName("confirmacionProducto")[0].style.display = "none"
         this.cargarInventarioExistente()
     }
 
@@ -389,7 +395,7 @@ export default class TablaVenta extends Component {
 
                 <div className="confirmacionProducto">
                     <h2>Se realizó correctamente la venta</h2>
-                    <Link to="venta" onClick={() => document.getElementsByClassName("confirmacionProducto")[0].style.display = "none"} className="btn-aceptarProducto">Aceptar</Link>
+                    <Link  onClick={this.restaurarInventario} className="btn-aceptarProducto">Aceptar</Link>
                 </div>
             </div>
         )
