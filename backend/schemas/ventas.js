@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const schema = Joi.object({
-    idDoctor:Joi.string().min(1).required(),
+    idDoctor:Joi.string().allow(null).allow(""),
     detalle: Joi.array().items({
         idProducto: Joi.string(),
         cantidad: Joi.number().min(1).required(),

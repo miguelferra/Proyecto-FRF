@@ -6,21 +6,22 @@
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 20% 40% 20% 20%;
+    grid-template-rows: 15% 40% 20% 20%;
   
 }
 .segmento-busqueda{
     padding: 10px;
-    font-size: 30px;
+    font-size: 25px;
     grid-column: 1/2 ;
     grid-row: 1/2;
     
 }
-.segmento-busqueda input{
+.segmento-busqueda input, .segmento-doctorVenta input, .segmento-doctorVenta label{
     font-size: 20px;
+    padding: 5px;
 }
 .segmento-productoVenta{
-    border: 1px solid black;
+    margin: 10px;
     grid-column: 1/2;
     grid-row: 2/4;
 }
@@ -60,14 +61,22 @@
 .input-total{
     
     font-size: 30px;
-    width: 100px;
+    width: 120px;
 }
 .input-nombre-seleccionado{
-    width: 300px;
+    width: 200px;
 }
 .input-cantidad{
-    width: 80px;
+    width: 110px;
     margin: 10px;
+}
+.titulo-lista{
+    text-align: center;
+    margin: 5px;
+}
+.lista-productos{
+    height: 450px;
+    overflow-y: scroll;
 }
 .btn-agregar-seleccionado{
     color: white;

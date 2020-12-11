@@ -8,6 +8,7 @@ export default class TablaVenta extends Component {
         super()
         this.state = {
             inventario: [],
+            inventario2: [],
             doctores: [],
             busqueda: [],
             nombre: "",
@@ -29,11 +30,16 @@ export default class TablaVenta extends Component {
 
 
     componentWillMount() {
-        this.cargarInventario()
+        this.cargarInventarioExistente()
         this.cargarDoctores()
+        this.cargarInventario()
     }
 
-    cargarInventario = () => {
+    componentDidUpdate(){
+        console.log(this.state.busqueda)
+    }
+
+    cargarInventarioExistente = () => {
         fetch(`http://localhost:3000/FRF/inventario/existencia`, {
             method: 'get',
             headers: new Headers({
@@ -42,6 +48,7 @@ export default class TablaVenta extends Component {
 
         }).then(response => response.json())
             .then(data => {
+                console.log("Se recarga")
                 this.setState({ inventario: data, busqueda: data })
             }).catch(err => console.log(err))
     }
@@ -56,6 +63,19 @@ export default class TablaVenta extends Component {
         }).then(response => response.json())
             .then(data => {
                 this.setState({ doctores: data })
+            }).catch(err => console.log(err))
+    }
+
+    cargarInventario = ()=>{
+        fetch(`http://localhost:3000/FRF/inventario`, {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+
+        }).then(response => response.json())
+            .then(data => {
+                this.setState({ inventario2: data})
             }).catch(err => console.log(err))
     }
 
@@ -74,10 +94,10 @@ export default class TablaVenta extends Component {
                     }
 
                 })
-                console.log(inv)
+               
             }
         })
-        console.log(this.state.productoSeleccionado)
+       
         document.getElementById("cantidad").value = "1"
 
     }
@@ -95,14 +115,27 @@ export default class TablaVenta extends Component {
 
 
         )
-        if (this.state.productoSeleccionado.cantidad <= 0 || estado ===false) {
+        if (this.state.productoSeleccionado.cantidad <= 0 || estado ===false || this.state.productoSeleccionado.nombre=== "") {
             return false
         }
 
 
+
+
         const lista = this.state.productosDetalles
+    
         lista.push(this.state.productoSeleccionado)
         this.setState({ productosDetalles: lista })
+        
+        for (let index = 0; index < this.state.busqueda.length; index++) {
+            if(this.state.productoSeleccionado._id === this.state.busqueda[index]._id){
+                this.borrarElementBusqueda(index);
+            }
+        }
+        
+
+
+       
 
 
 
@@ -122,6 +155,12 @@ export default class TablaVenta extends Component {
 
         this.total(this.state.productosDetalles)
 
+    }
+
+    borrarElementBusqueda=(e)=>{
+        const lista = this.state.busqueda
+        lista.splice(e,1);
+        this.setState({busqueda:lista})
     }
 
     total = (lista) => {
@@ -149,7 +188,23 @@ export default class TablaVenta extends Component {
     }
 
     eliminarProductoDetalle = e => {
+
+        let listaBusqueda = this.state.busqueda
+
+
+        this.state.inventario2.map(pro => 
+            {
+                if(pro._id === e.target.name){
+                    console.log("nia")
+                    listaBusqueda.push(pro)
+                }
+            }
+           )
+
+        this.setState({busqueda: listaBusqueda})
+
         const lista = this.state.productosDetalles.filter(pro => pro._id !== e.target.name);
+
         this.setState({ productosDetalles: lista })
         this.total(lista)
     }
@@ -174,6 +229,8 @@ export default class TablaVenta extends Component {
             return false
         }
 
+        console.log(this.state.doctorSeleccionado)
+
         fetch(`http://localhost:3000/FRF/ventas`, {
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -183,12 +240,13 @@ export default class TablaVenta extends Component {
                 idDoctor: this.state.doctorSeleccionado,
                 detalle: this.listaDetalleVenta(),
                 total: this.state.total
-
             })
-
         }).then(response => response.json())
-            .then(this.ventanaConfirmacion())
+            .then()
             .catch(err => console.log(err))
+
+
+            this.ventanaConfirmacion()
     }
 
     ventanaConfirmacion = () => {
@@ -206,11 +264,11 @@ export default class TablaVenta extends Component {
             }
         })
 
-        this.cargarInventario()
+        this.cargarInventarioExistente()
     }
 
     validacionVenta = () => {
-        if (this.state.productosDetalles.length === 0 || this.state.doctorSeleccionado === "") {
+        if (this.state.productosDetalles.length === 0 ) {
             return false
         }
         else return true
@@ -226,6 +284,7 @@ export default class TablaVenta extends Component {
         return lista
     }
 
+
     render() {
         const lista = this.state.busqueda.filter(det => {
             return det.idProducto.nombre.toLowerCase().includes(this.state.nombre.toLowerCase());
@@ -235,9 +294,10 @@ export default class TablaVenta extends Component {
 
 
                 <div className="segmento-busqueda">
+                    <h2></h2>
                     <div className="nombre-busqueda">
                         <label>Producto</label>
-                        <input className="input-nombre" onChange={this.busquedaInput} type="text"></input>
+                        <input className="input-nombre" placeholder="Nombre Producto" onChange={this.busquedaInput} type="text"></input>
                     </div>
 
                     <div className="clasificacion-busqueda">
@@ -253,23 +313,20 @@ export default class TablaVenta extends Component {
                                 <option>CREMA</option>
                                 <option>HIGIENE</option>
                                 <option>SHAMPOO</option>
-                            <option>Otros</option>
+                                <option>OTROS</option>
                         </select>
                     </div>
-
-                    <div className="producto-seleccionado">
-                        <input className="input-nombre-seleccionado" value={this.state.productoSeleccionado.nombre} disabled type="text"></input>
-                        <input className="input-cantidad" id="cantidad" onChange={this.handleChange} name="cantidad" defaultValue={this.state.productoSeleccionado.cantidad} type="number"></input>
-                        <input className="btn-agregar-seleccionado" onClick={this.agregarProducto} type="button" value="Agregar"></input>
-                    </div>
-
                 </div>
 
 
                 <div className="segmento-productoVenta">
+                    <h2 className="titulo-lista">Lista de productos</h2>
+                    <div className="lista-productos">
                     {lista.map(inv =>
                         <button className="producto-inventario" key={inv._id} value={inv._id} onClick={this.seleccionProducto}   >{inv.idProducto.nombre}</button>
                     )}
+                    </div>
+                    
 
                 </div>
 
@@ -296,6 +353,15 @@ export default class TablaVenta extends Component {
 
                 </div>
                 <div className="segmento-doctorVenta">
+
+                <div className="producto-seleccionado">
+                        <label>Producto Seleccionado </label>
+                        <input className="input-nombre-seleccionado" value={this.state.productoSeleccionado.nombre} disabled type="text"></input>
+                        <input className="input-cantidad" id="cantidad" onChange={this.handleChange} placeholder="Cantidad" name="cantidad" defaultValue={this.state.productoSeleccionado.cantidad} type="number"></input>
+                        <input className="btn-agregar-seleccionado" onClick={this.agregarProducto}  type="button" value="Agregar"></input>
+                    </div>
+
+
                     <select className="combobox-doctor" onChange={this.handleDoctor}>
                         <option>Seleccione un doctor</option>
                         {this.state.doctores.map(doc =>
@@ -306,6 +372,8 @@ export default class TablaVenta extends Component {
 
                         )}
                     </select>
+
+                    
 
 
                 </div>

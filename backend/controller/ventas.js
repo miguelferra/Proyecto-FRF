@@ -5,6 +5,7 @@ const inventarioController = require("./inventario");
 const agregar = async(req,res) =>{
     //Recibe idDoctor, detalles, fecha, total
     const { idDoctor, detalle, total } = req.body;
+    console.log(idDoctor)
     try{
         const venta = new ventasModel({ idDoctor, detalle, total });
         cambiarInventario(detalle);
@@ -39,7 +40,7 @@ const calcularTotal = async(detalle,total) =>{
 
 const obtenerVentas = async(req, res)=>{
     try{
-        const ventas = await ventasModel.find().populate('idDoctor').populate({
+        const ventas = await ventasModel.find().populate({
             path: 'detalle.idProducto',
             model: 'productos'
        });
